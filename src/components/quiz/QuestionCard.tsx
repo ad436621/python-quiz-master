@@ -64,12 +64,12 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
 
       {/* Question Text */}
       <div className="mb-6">
-        <p className="text-lg font-semibold text-foreground font-cairo whitespace-pre-wrap leading-relaxed">
+        <p dir="auto" className="text-lg font-semibold text-foreground whitespace-pre-wrap leading-relaxed">
           {question.question}
         </p>
         
         {question.code && (
-          <pre className="mt-4 p-4 bg-muted rounded-lg overflow-x-auto text-sm font-mono">
+          <pre dir="ltr" className="mt-4 p-4 bg-muted rounded-lg overflow-x-auto text-sm font-mono text-left">
             <code>{question.code}</code>
           </pre>
         )}
@@ -104,7 +104,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
                   getChoiceLabel(index)
                 )}
               </span>
-              <span className="text-right flex-1 font-cairo">{choice}</span>
+              <span dir="auto" className="flex-1">{choice}</span>
             </button>
           )
         ))}
