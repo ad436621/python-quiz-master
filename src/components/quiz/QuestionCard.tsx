@@ -53,7 +53,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
   };
 
   return (
-    <div className="quiz-card p-6 mb-6 slide-up">
+    <div className="quiz-card p-6 mb-6 slide-up" dir="rtl">
       {/* Question Header */}
       <div className="flex flex-wrap items-center gap-3 mb-6">
         <span className="px-4 py-2 bg-primary text-primary-foreground rounded-lg font-bold font-inter">

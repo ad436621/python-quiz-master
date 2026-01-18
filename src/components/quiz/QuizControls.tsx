@@ -23,7 +23,7 @@ const QuizControls: React.FC<QuizControlsProps> = ({
   onSubmit,
 }) => {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
+    <div className="flex flex-wrap items-center justify-center gap-3 mb-8" dir="rtl">
       {/* Previous Button */}
       <button
         onClick={onPrevious}
@@ -36,8 +36,8 @@ const QuizControls: React.FC<QuizControlsProps> = ({
           }
         `}
       >
-        <ChevronRight className="w-5 h-5" />
         السابق
+        <ChevronRight className="w-5 h-5" />
       </button>
 
       {/* Skip Button */}
@@ -52,8 +52,8 @@ const QuizControls: React.FC<QuizControlsProps> = ({
           }
         `}
       >
-        <SkipForward className="w-5 h-5" />
         تخطي
+        <SkipForward className="w-5 h-5" />
       </button>
 
       {/* Submit / Next Button */}
@@ -62,8 +62,8 @@ const QuizControls: React.FC<QuizControlsProps> = ({
           onClick={onNext}
           className="python-button flex items-center gap-2 font-cairo"
         >
-          {currentQuestion === totalQuestions - 1 ? 'إنهاء الاختبار' : 'التالي'}
           <ChevronLeft className="w-5 h-5" />
+          {currentQuestion === totalQuestions - 1 ? 'إنهاء الاختبار' : 'التالي'}
         </button>
       ) : (
         <button
@@ -77,8 +77,8 @@ const QuizControls: React.FC<QuizControlsProps> = ({
             }
           `}
         >
-          <Check className="w-5 h-5" />
           تأكيد الإجابة
+          <Check className="w-5 h-5" />
         </button>
       )}
     </div>
