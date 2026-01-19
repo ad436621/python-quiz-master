@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback } from "react";
 import { quizQuestions, shuffleQuestions, Question } from "@/data/quizQuestions";
 import QuizHeader from "./QuizHeader";
 import QuizProgress from "./QuizProgress";
@@ -6,8 +6,10 @@ import QuestionCard from "./QuestionCard";
 import QuizControls from "./QuizControls";
 import QuizResults from "./QuizResults";
 import QuizFooter from "./QuizFooter";
+import PlayerNameModal from "./PlayerNameModal";
 
 const Quiz: React.FC = () => {
+  const [playerName, setPlayerName] = useState<string | null>(null);
   const [questions, setQuestions] = useState<Question[]>(() => shuffleQuestions(quizQuestions));
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedChoice, setSelectedChoice] = useState<number | null>(null);
@@ -74,6 +76,11 @@ const Quiz: React.FC = () => {
     setAnsweredIndices(new Set());
   }, []);
 
+  // Show name modal if player hasn't entered their name
+  if (!playerName) {
+    return <PlayerNameModal onSubmit={setPlayerName} />;
+  }
+
   if (isComplete) {
     return (
       <div className="container max-w-4xl mx-auto px-4 py-8" dir="rtl">
@@ -81,6 +88,7 @@ const Quiz: React.FC = () => {
         <QuizResults
           totalQuestions={answeredQuestions}
           correctAnswers={correctAnswers}
+          playerName={playerName}
           onRestart={handleRestart}
         />
         <QuizFooter />

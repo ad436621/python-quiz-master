@@ -1,19 +1,50 @@
-import React from "react";
-import { Trophy, RefreshCcw, Star, Target } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Trophy, RefreshCcw, Star, Target, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import Leaderboard from "./Leaderboard";
 
 interface QuizResultsProps {
   totalQuestions: number;
   correctAnswers: number;
+  playerName: string;
   onRestart: () => void;
 }
 
 const QuizResults: React.FC<QuizResultsProps> = ({
   totalQuestions,
   correctAnswers,
+  playerName,
   onRestart,
 }) => {
-  const percentage = Math.round((correctAnswers / totalQuestions) * 100);
+  const [saving, setSaving] = useState(true);
+  const [saved, setSaved] = useState(false);
+  const percentage = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
   
+  useEffect(() => {
+    const saveScore = async () => {
+      if (saved || totalQuestions === 0) {
+        setSaving(false);
+        return;
+      }
+      
+      try {
+        await supabase.from("quiz_scores").insert({
+          player_name: playerName,
+          score: correctAnswers,
+          total_questions: totalQuestions,
+          percentage: percentage,
+        });
+        setSaved(true);
+      } catch (error) {
+        console.error("Error saving score:", error);
+      } finally {
+        setSaving(false);
+      }
+    };
+
+    saveScore();
+  }, [playerName, correctAnswers, totalQuestions, percentage, saved]);
+
   const getMessage = () => {
     if (percentage >= 90) return { text: "ممتاز! أداء رائع! 🎉", color: "text-success" };
     if (percentage >= 75) return { text: "جيد جداً! استمر! 🌟", color: "text-primary" };
@@ -87,14 +118,25 @@ const QuizResults: React.FC<QuizResultsProps> = ({
         </div>
       </div>
 
+      {/* Saving Indicator */}
+      {saving && (
+        <div className="flex items-center justify-center gap-2 text-muted-foreground mb-4">
+          <Loader2 className="w-4 h-4 animate-spin" />
+          <span>جاري حفظ النتيجة...</span>
+        </div>
+      )}
+
       {/* Restart Button */}
       <button
         onClick={onRestart}
-        className="python-button flex items-center gap-2 mx-auto font-cairo"
+        className="python-button flex items-center gap-2 mx-auto font-cairo mb-8"
       >
         <RefreshCcw className="w-5 h-5" />
         إعادة الاختبار
       </button>
+
+      {/* Leaderboard */}
+      <Leaderboard currentPlayerName={playerName} />
     </div>
   );
 };
