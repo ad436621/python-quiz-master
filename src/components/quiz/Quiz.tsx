@@ -84,7 +84,7 @@ const Quiz: React.FC = () => {
   if (isComplete) {
     return (
       <div className="container max-w-4xl mx-auto px-4 py-8" dir="rtl">
-        <QuizHeader totalQuestions={questions.length} />
+      <QuizHeader totalQuestions={questions.length} playerName={playerName} />
         <QuizResults
           totalQuestions={answeredQuestions}
           correctAnswers={correctAnswers}
@@ -98,7 +98,7 @@ const Quiz: React.FC = () => {
 
   return (
     <div className="container max-w-4xl mx-auto px-4 py-8" dir="rtl">
-      <QuizHeader totalQuestions={questions.length} />
+      <QuizHeader totalQuestions={questions.length} playerName={playerName} />
       
       <QuizProgress
         currentQuestion={currentQuestionIndex}

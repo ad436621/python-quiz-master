@@ -13,19 +13,25 @@ interface Score {
 
 interface LeaderboardProps {
   currentPlayerName?: string;
+  showAll?: boolean;
 }
 
-const Leaderboard: React.FC<LeaderboardProps> = ({ currentPlayerName }) => {
+const Leaderboard: React.FC<LeaderboardProps> = ({ currentPlayerName, showAll = false }) => {
   const [scores, setScores] = useState<Score[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchScores = async () => {
-    const { data, error } = await supabase
+    const query = supabase
       .from("quiz_scores")
       .select("*")
       .order("percentage", { ascending: false })
-      .order("created_at", { ascending: false })
-      .limit(10);
+      .order("created_at", { ascending: false });
+    
+    if (!showAll) {
+      query.limit(10);
+    }
+
+    const { data, error } = await query;
 
     if (!error && data) {
       setScores(data);
