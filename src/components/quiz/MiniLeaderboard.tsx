@@ -17,7 +17,7 @@ const MiniLeaderboard: React.FC = () => {
 
   const fetchTopScores = async () => {
     const { data, error } = await supabase
-      .from("public_leaderboard")
+      .from("quiz_scores")
       .select("*")
       .order("percentage", { ascending: false })
       .order("created_at", { ascending: false })
