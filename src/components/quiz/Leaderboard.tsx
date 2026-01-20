@@ -22,7 +22,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ currentPlayerName, showAll = 
 
   const fetchScores = async () => {
     const query = supabase
-      .from("quiz_scores")
+      .from("quiz_sco")
       .select("*")
       .order("percentage", { ascending: false })
       .order("created_at", { ascending: false });
