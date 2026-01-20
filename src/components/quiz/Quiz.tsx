@@ -151,7 +151,7 @@ const Quiz: React.FC = () => {
           ) : (
             <>
               <Sparkles className="w-4 h-4" />
-              أسئلة جديدة بالذكاء الاصطناعي
+              أسئلة جديدة 
             </>
           )}
         </Button>
